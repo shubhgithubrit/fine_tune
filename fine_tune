@@ -1,0 +1,21 @@
+from transformers import GPT2LMHeadModel, GPT2Tokenizer
+
+# Load the fine-tuned model
+save_path1 = "C:/Users/dell/Desktop/model"  # Specify the path to your saved fine-tuned model
+save_path2 = "C:/Users/dell/Desktop/model/tokenizer"
+model = GPT2LMHeadModel.from_pretrained(save_path1)
+
+# Load the pre-trained tokenizer
+tokenizer = GPT2Tokenizer.from_pretrained(save_path2)
+
+# Set the model in evaluation mode
+model.eval()
+
+# Generate text using the fine-tuned model and pre-trained tokenizer
+prompt = "The weather is looks cool today"
+input_ids = tokenizer.encode(prompt, return_tensors="pt")
+output = model.generate(input_ids, max_length=100,temperature=0.8)
+
+generated_text = tokenizer.decode(output[0], skip_special_tokens=True)
+print("Generated Text:")
+print(generated_text)
